@@ -13,24 +13,33 @@ class KeyboardViewController: UIInputViewController {
 
 //    @IBOutlet var nextKeyboardButton: UIButton!
     
-    override func updateViewConstraints() {
-        super.updateViewConstraints()
-    }
+//    override func updateViewConstraints() {
+//        // adjust a custom keyboard’s height, change its primary view's height constraint
+////        let heightConstraint = NSLayoutConstraint(item: self.view, attribute: NSLayoutAttribute.height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 0.0, constant: 500)
+////        self.view.addConstraint(heightConstraint)
+//        
+//        super.updateViewConstraints()
+//    }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        // adjust a custom keyboard’s height, change its primary view's height constraint
-//        let heightConstraint = NSLayoutConstraint(item: self.view, attribute: NSLayoutAttribute.height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 0.0, constant: 500)
-//        self.view.addConstraint(heightConstraint)
-    }
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("\(NSStringFromClass(object_getClass(self)!)) - viewDidLoad()")
+
         // Init custom Keyboard View
         self.initCustomKeyboardView()
-
+        
+        // Observe for user default changes
+        NotificationCenter.default.addObserver(self, selector: #selector(self.userDefaultsDidChange(_:)), name:UserDefaults.didChangeNotification, object: nil)
+        
+        // adjust a custom keyboard’s height, change its primary view's height constraint
+        let widthConstraint = NSLayoutConstraint(item: self.view, attribute: NSLayoutAttribute.width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 0.0, constant: 0)
+        self.view.addConstraint(widthConstraint)
+        let heightConstraint = NSLayoutConstraint(item: self.view, attribute: NSLayoutAttribute.height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 0.0, constant: 350)
+        self.view.addConstraint(heightConstraint)
 //        self.nextKeyboardButton.setTitle(NSLocalizedString("Switch Keyboard", comment: "Title for 'Next Keyboard' button"), for: [])
 //        self.nextKeyboardButton.sizeToFit()
 //        self.nextKeyboardButton.translatesAutoresizingMaskIntoConstraints = false
@@ -44,6 +53,7 @@ class KeyboardViewController: UIInputViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         print("\(NSStringFromClass(object_getClass(self)!)) - viewDidAppear()")
     }
     
@@ -54,21 +64,15 @@ class KeyboardViewController: UIInputViewController {
             fatalError()
         }
         
-        //NotificationCenter.default.addObserver(self, selector: #selector(userDefaultsDidChange), name:UserDefaults.didChangeNotification, object: nil)
-        
-        if let buttonView = keyboardView.viewWithTag(2),
-            let uiButton = buttonView as? UIButton
+        if let view = keyboardView.viewWithTag(2),
+            let uiButtonOpenHostApp = view as? UIButton
         {
-            let userDefaults = UserDefaults.init(suiteName: "group.custom.keyboard.app")
-            let customNumber = userDefaults?.integer(forKey: "CustomNumber")
-            print("\(customNumber ?? 999)")
-            
-            uiButton.setTitle("\(customNumber ?? 999)", for: UIControlState.normal)
-            uiButton.addTarget(self, action: #selector(openHostApp), for: .touchUpInside)
+            uiButtonOpenHostApp.setTitle("open host app", for: UIControlState.normal)
+            uiButtonOpenHostApp.addTarget(self, action: #selector(openHostApp), for: .touchUpInside)
         }
         
-        if let webView = keyboardView.viewWithTag(1) {
-            if let wkWebView = webView as? WKWebView {
+        if let view = keyboardView.viewWithTag(1) {
+            if let wkWebView = view as? WKWebView {
                 if let url = URL(string:"https://www.manulife.com.hk") {
                     let request = URLRequest(url: url)
                     wkWebView.load(request)
@@ -76,13 +80,38 @@ class KeyboardViewController: UIInputViewController {
             }
         }
         
+        if let view = keyboardView.viewWithTag(3),
+            let uiButtonUpdateText = view as? UIButton
+        {
+            uiButtonUpdateText.setTitle("update text", for: UIControlState.normal)
+            uiButtonUpdateText.addTarget(self, action: #selector(updateTextInput), for: .touchUpInside)
+        }
+        
+        if let view = keyboardView.viewWithTag(4),
+            let uiButtonSwitchKey = view as? UIButton
+        {
+            uiButtonSwitchKey.setTitle("switch key", for: UIControlState.normal)
+            uiButtonSwitchKey.addTarget(self, action: #selector(handleInputModeList(from:with:)), for: .touchUpInside)
+        }
+        
         self.view.addSubview(keyboardView)
     }
     
-    @objc func userDefaultsDidChange() {
+    @objc func updateTextInput() {
+        // Inserts the string "hello " at the insertion point
         let userDefaults = UserDefaults.init(suiteName: "group.custom.keyboard.app")
-        let customNumber = userDefaults?.integer(forKey: "CustomNumber")
-        print("\(customNumber ?? 999)")
+        let customValue = userDefaults?.string(forKey: "CustomNumber")
+        self.textDocumentProxy.deleteBackward()
+        self.textDocumentProxy.insertText(customValue ?? "")
+    }
+    
+    @objc func userDefaultsDidChange(_ notification: Notification) {
+        print("userDefaultsDidChange")
+        let userDefaults = UserDefaults.init(suiteName: "group.custom.keyboard.app")
+        let customValue = userDefaults?.string(forKey: "CustomNumber")
+        print("\(customValue ?? "")")
+        self.textDocumentProxy.deleteBackward()
+        self.textDocumentProxy.insertText(customValue ?? "")
     }
     
     @objc func openHostApp() {

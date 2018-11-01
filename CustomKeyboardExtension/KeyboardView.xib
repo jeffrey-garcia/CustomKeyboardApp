@@ -17,8 +17,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eFb-Nm-HPe">
-                    <rect key="frame" x="0.0" y="20" width="375" height="30"/>
-                    <state key="normal" title="Button"/>
+                    <rect key="frame" x="0.0" y="20" width="95" height="30"/>
+                    <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" title="Custom Value"/>
                 </button>
                 <wkWebView tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K1j-Rm-7PJ">
                     <rect key="frame" x="0.0" y="50" width="375" height="617"/>
@@ -28,16 +30,32 @@
                         <wkPreferences key="preferences"/>
                     </wkWebViewConfiguration>
                 </wkWebView>
+                <button opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YfS-Us-Cv4">
+                    <rect key="frame" x="95" y="20" width="233" height="30"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" red="0.2219244195" green="0.5" blue="0.31132179469999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <state key="normal" title="Update Input"/>
+                </button>
+                <button opaque="NO" tag="4" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Frx-85-MPJ" userLabel="Switch Keyboard">
+                    <rect key="frame" x="328" y="20" width="47" height="30"/>
+                    <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" title="Switch"/>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="YfS-Us-Cv4" firstAttribute="leading" secondItem="eFb-Nm-HPe" secondAttribute="trailing" id="1Lp-fP-lzC"/>
+                <constraint firstItem="K1j-Rm-7PJ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="6RU-Bj-Zeb"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="K1j-Rm-7PJ" secondAttribute="trailing" id="6a0-fH-cSf"/>
+                <constraint firstItem="K1j-Rm-7PJ" firstAttribute="top" secondItem="eFb-Nm-HPe" secondAttribute="bottom" id="AQU-wV-frY"/>
+                <constraint firstItem="YfS-Us-Cv4" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="Pj2-D3-l9J"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="K1j-Rm-7PJ" secondAttribute="bottom" id="ZXl-dd-LVp"/>
-                <constraint firstItem="K1j-Rm-7PJ" firstAttribute="top" secondItem="eFb-Nm-HPe" secondAttribute="bottom" id="eeh-1K-qg8"/>
-                <constraint firstItem="K1j-Rm-7PJ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="goh-2C-C3J"/>
-                <constraint firstItem="eFb-Nm-HPe" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="hx6-ex-K7P"/>
-                <constraint firstItem="eFb-Nm-HPe" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="nGI-5t-f6P"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="eFb-Nm-HPe" secondAttribute="trailing" id="sle-EW-Vpa"/>
+                <constraint firstItem="eFb-Nm-HPe" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="bDW-bA-qGF"/>
+                <constraint firstItem="eFb-Nm-HPe" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="djb-Yg-Iv0"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Frx-85-MPJ" secondAttribute="trailing" id="gl6-Fv-omI"/>
+                <constraint firstItem="Frx-85-MPJ" firstAttribute="leading" secondItem="YfS-Us-Cv4" secondAttribute="trailing" id="h5a-Or-2XU"/>
+                <constraint firstItem="Frx-85-MPJ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="qEX-Le-I2e"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="33.5" y="53.5"/>
